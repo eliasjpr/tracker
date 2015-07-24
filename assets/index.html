@@ -10,17 +10,24 @@
   <style type="text/css"></style>
 </head>
 <body>
-<p>Let the game begin!</p>
 
-<a href="page2.html">Hello!</a>
+<div id="pages-clicks" style="margin: 10px">
+
+</div>
 
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="/js/dependencies/sails.io.js"></script>
-<script src="/js/tracker.js"></script>
 <script>
-  pinchMeTrack.trackAll();
-  pinchMeTrack.debug(true)
+
+  io.socket.get('/page', {}, function (data, jwres){
+    console.log(jwres)
+    for( click in jwres){
+      console.log( jwres[click])
+      $('#pages-clicks').append('<span>'+ jwres[click].name + '</span><br />')
+    }
+
+  });
 </script>
 </html>

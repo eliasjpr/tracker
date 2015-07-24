@@ -1,8 +1,8 @@
 (function (window) {
   "use strict";
-
-  var pinchMeTrack = window.pinchMeTrack || {};
   var visitId, visitorId, track;
+  var pinchMeTrack = window.pinchMeTrack || {};
+
   var visitTtl     = 4 * 60; // 4 hours
   var visitorTtl   = 2 * 365 * 24 * 60; // 2 years
   var isReady      = false;
@@ -257,7 +257,6 @@
   pinchMeTrack.track = function (name, properties) {
     // generate unique id
     var event = {
-      id           : generateId(),
       name         : name,
       event        : properties,
       time         : (new Date()).getTime() / 1000.0,
@@ -329,5 +328,12 @@
     trackEvent(eventQueue[i]);
   }
 
+  // Attache tracker back to window object
   window.pinchMeTrack = pinchMeTrack;
+
+  // Start Tracking
+  $(window.document).ready(function(){
+    window.pinchMeTrack.trackAll();
+  });
+
 }(window));
