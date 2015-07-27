@@ -1,96 +1,147 @@
 <app-navigation>
-  <div class="header navbar navbar-inverse ">
+<div class="header navbar navbar-inverse">
+  <!-- BEGIN TOP NAVIGATION BAR -->
   <div class="navbar-inner">
-  <div class="header-seperation" style="display: none;">
-  <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">
-  <li class="dropdown"><a id="main-menu-toggle" href="#main-menu" class="">
-  <div class="iconset top-menu-toggle-white"></div>
-  </a></li>
-  </ul>
-  <a href="index.html"><img src="/img/logo2x.png" class="logo" alt="" data-src="/img/logo.png"
-  data-src-retina="assets/img/logo2x.png" width="106" height="21"></a>
-
-  <ul class="nav pull-right notifcation-center">
-  <li class="dropdown" id="header_task_bar"><a href="index.html" class="dropdown-toggle active" data-toggle="">
-  <div class="iconset top-home"></div>
-  </a></li>
-  <li class="dropdown" id="header_inbox_bar"><a href="email.html" class="dropdown-toggle">
-  <div class="iconset top-messages"></div>
-  <span class="badge animated bounceIn" id="msgs-badge">2</span> </a></li>
-  <li class="dropdown" id="portrait-chat-toggler" style="display:none"><a href="#sidr" class="chat-menu-toggle">
-  <div class="iconset top-chat-white "></div>
-  </a></li>
-  </ul>
+    <!-- BEGIN NAVIGATION HEADER -->
+    <div class="header-seperation">
+      <!-- BEGIN MOBILE HEADER -->
+      <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">
+        <li class="dropdown">
+          <a id="main-menu-toggle" href="#main-menu" class="">
+            <div class="iconset top-menu-toggle-white"></div>
+          </a>
+        </li>
+      </ul>
+      <!-- END MOBILE HEADER -->
+      <!-- BEGIN LOGO -->
+      <a href="#" class="logo">
+        Logo
+      </a>
+      <!-- END LOGO -->
+      <!-- BEGIN LOGO NAV BUTTONS -->
+      <ul class="nav pull-right notifcation-center">
+        <li class="dropdown" id="header_task_bar">
+          <a href="#" class="dropdown-toggle active" data-toggle="">
+            <div class="iconset top-home"></div>
+          </a>
+        </li>
+        <li class="dropdown" id="header_inbox_bar">
+          <a href="#" class="dropdown-toggle">
+            <div class="iconset top-messages"></div>
+            <span class="badge animated bounceIn" id="msgs-badge">2</span>
+            </a>
+        </li>
+        <!-- BEGIN MOBILE CHAT TOGGLER -->
+        <li class="dropdown" id="portrait-chat-toggler" style="display:none">
+          <a href="#sidr" class="chat-menu-toggle">
+            <div class="iconset top-chat-white"></div>
+          </a>
+        </li>
+        <!-- END MOBILE CHAT TOGGLER -->
+      </ul>
+      <!-- END LOGO NAV BUTTONS -->
+    </div>
+    <!-- END NAVIGATION HEADER -->
+    <!-- BEGIN CONTENT HEADER -->
+    <div class="header-quick-nav">
+      <!-- BEGIN HEADER LEFT SIDE SECTION -->
+      <div class="pull-left">
+        <!-- BEGIN SLIM NAVIGATION TOGGLE -->
+        <ul class="nav quick-section">
+          <li class="quicklinks">
+            <a href="#" class="" id="layout-condensed-toggle">
+              <div class="iconset top-menu-toggle-dark"></div>
+            </a>
+          </li>
+        </ul>
+        <!-- END SLIM NAVIGATION TOGGLE -->
+        <!-- BEGIN HEADER QUICK LINKS -->
+        <ul class="nav quick-section">
+          <li class=" input-prepend inside search-form no-boarder">
+            <span class="add-on"><span class="iconset top-search"></span></span>
+            <input name="" type="text" class="no-boarder" placeholder="Search Dashboard" style="width:250px;">
+          </li>
+        </ul>
+        <!-- BEGIN HEADER QUICK LINKS -->
+      </div>
+      <!-- END HEADER LEFT SIDE SECTION -->
+      <!-- BEGIN HEADER RIGHT SIDE SECTION -->
+      <div class="pull-right">
+        <div class="chat-toggler">
+          <!-- BEGIN NOTIFICATION CENTER -->
+          <a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom" data-content="" data-toggle="dropdown" data-original-title="Notifications">
+            <div class="user-details">
+              <div class="username">
+                <span class="badge badge-important">3</span>&nbsp;John<span class="bold">&nbsp;Smith</span>
+              </div>
+            </div>
+            <div class="iconset top-down-arrow"></div>
+          </a>
+          <div id="notification-list" style="display:none">
+            <div style="width:300px">
+              <!-- BEGIN NOTIFICATION MESSAGE -->
+              <div class="notification-messages info">
+                <div class="user-profile">
+                  <img src="/img/profiles/d2x.jpg" alt="" data-src="/img/profiles/d.jpg" data-src-retina="/img/profiles/d2x.jpg" width="35" height="35">
+                </div>
+                <div class="message-wrapper">
+                  <div class="heading">Title of Notification</div>
+                  <div class="description">Description...</div>
+                  <div class="date pull-left">A min ago</div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <!-- END NOTIFICATION MESSAGE -->
+            </div>
+          </div>
+          <!-- END NOTIFICATION CENTER -->
+          <!-- BEGIN PROFILE PICTURE -->
+          <div class="profile-pic">
+            <img src="/img/profiles/avatar_small2x.jpg" alt="" data-src="/img/profiles/avatar_small.jpg" data-src-retina="/img/profiles/avatar_small2x.jpg" width="35" height="35">
+          </div>
+          <!-- END PROFILE PICTURE -->
+        </div>
+        <!-- BEGIN HEADER NAV BUTTONS -->
+        <ul class="nav quick-section">
+          <!-- BEGIN SETTINGS -->
+          <li class="quicklinks">
+            <a data-toggle="dropdown" class="dropdown-toggle pull-right" href="#" id="user-options">
+              <div class="iconset top-settings-dark"></div>
+            </a>
+            <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="user-options">
+              <li><a href="#">Normal Link</a></li>
+              <li><a href="#">Badge Link&nbsp;&nbsp;<span class="badge badge-important animated bounceIn">2</span></a></li>
+              <li class="divider"></li>
+              <li><a href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Separated Link</a></li>
+            </ul>
+          </li>
+          <!-- END SETTINGS -->
+          <li class="quicklinks"><span class="h-seperate"></span></li>
+          <!-- BEGIN CHAT SIDEBAR TOGGLE -->
+          <li class="quicklinks">
+            <a id="chat-menu-toggle" href="#sidr" class="chat-menu-toggle">
+              <div class="iconset top-chat-dark"><span class="badge badge-important animated bounceIn" id="chat-message-count">1</span></div>
+            </a>
+            <!-- BEGIN OPTIONAL RECENT CHAT POP UP NOTIFICATION -->
+            <div class="simple-chat-popup chat-menu-toggle hide animated fadeOut">
+              <div class="simple-chat-popup-arrow"></div>
+              <div class="simple-chat-popup-inner">
+                <div style="width:100px">
+                  <div class="semi-bold">Name</div>
+                  <div class="message">Message...</div>
+                </div>
+              </div>
+            </div>
+            <!-- END OPTIONAL RECENT CHAT POP UP NOTIFICATION -->
+          </li>
+          <!-- END CHAT SIDEBAR TOGGLE -->
+        </ul>
+        <!-- END HEADER NAV BUTTONS -->
+      </div>
+      <!-- END HEADER RIGHT SIDE SECTION -->
+    </div>
+    <!-- END CONTENT HEADER -->
   </div>
-  <div class="header-quick-nav">
-  <div class="pull-left">
-  <ul class="nav quick-section">
-  <li class="quicklinks"><a href="#" class="" id="layout-condensed-toggle">
-  <div class="iconset top-menu-toggle-dark"></div>
-  </a></li>
-  </ul>
-  <ul class="nav quick-section">
-  <li class="quicklinks"><a href="#" class="">
-  <div class="iconset top-reload"></div>
-  </a></li>
-  <li class="quicklinks"><span class="h-seperate"></span></li>
-  <li class="quicklinks"><a href="#" class="">
-  <div class="iconset top-tiles"></div>
-  </a></li>
-  <li class="m-r-10 input-prepend inside search-form no-boarder"><span class="add-on"> <span
-  class="iconset top-search"></span></span>
-  <input name="" type="text" class="no-boarder " placeholder="Search Dashboard" style="width:250px;">
-  </li>
-  </ul>
-  </div>
-  <div class="pull-right">
-  <div class="chat-toggler"><a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom"
-  data-content="" data-toggle="dropdown" data-original-title="Notifications">
-  <div class="user-details">
-  <div class="username"><span class="badge badge-important">3</span> John <span class="bold">Smith</span>
-  </div>
-  </div>
-  <div class="iconset top-down-arrow"></div>
-  </a>
-
-  <div class="profile-pic"><img src="/img/profiles/avatar_small2x.jpg" alt=""
-  data-src="/img/profiles/avatar_small.jpg"
-  data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="35" height="35">
-  </div>
-  </div>
-  <ul class="nav quick-section ">
-  <li class="quicklinks"><a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#"
-  id="user-options">
-  <div class="iconset top-settings-dark "></div>
-  </a>
-  <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-  <li><a href="user-profile.html"> My Account</a></li>
-  <li><a href="calender.html">My Calendar</a></li>
-  <li><a href="email.html"> My Inbox&nbsp;&nbsp;<span
-  class="badge badge-important animated bounceIn">2</span></a></li>
-  <li class="divider"></li>
-  <li><a href="login.html"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
-  </ul>
-  </li>
-  <li class="quicklinks"><span class="h-seperate"></span></li>
-  <li class="quicklinks"><a id="chat-menu-toggle" href="#sidr" class="chat-menu-toggle">
-  <div class="iconset top-chat-dark "><span class="badge badge-important animated bounceIn"
-  id="chat-message-count">1</span></div>
-  </a>
-
-  <div class="simple-chat-popup chat-menu-toggle hide animated fadeOut">
-  <div class="simple-chat-popup-arrow"></div>
-  <div class="simple-chat-popup-inner">
-  <div style="width:100px">
-  <div class="semi-bold">David Nester</div>
-  <div class="message">Hey you there</div>
-  </div>
-  </div>
-  </div>
-  </li>
-  </ul>
-  </div>
-  </div>
-  </div>
-  </div>
+  <!-- END TOP NAVIGATION BAR -->
+</div>
 </app-navigation>
