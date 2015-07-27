@@ -9,7 +9,7 @@ function PagesStore(){
   }
 
   self.add = function(item){
-    self.pages.push(item)
+    self.pages.unshift(item)
     self.trigger('page-added', self.pages)
   }
 

@@ -14,25 +14,26 @@
       <table class="table no-more-tables">
         <thead>
         <tr>
-          <th>ID</th>
           <th>Title</th>
           <th>Url</th>
           <th>Type</th>
-          <th>Progress</th>
+          <th>Ip Address</th>
+          <th>Browser</th>
+          <th>Cookie Enabled</th>
+          <th>Language</th>
+          <th>Platform</th>
         </tr>
         </thead>
         <tbody>
         <tr each="{ loaded_pages }">
-        <td>{ id }</td>
           <td class="v-align-middle">{data.title}</td>
           <td class="v-align-middle"><span class="muted">{data.url}</span></td>
-          <td><span class="muted">{name}</span></td>
-          <td class="v-align-middle">
-            <div class="progress">
-              <div data-percentage="79%" class="progress-bar progress-bar-success animate-progress-bar"
-                   style="width: 79%;"></div>
-            </div>
-          </td>
+          <td class="v-align-middle"><span class="muted">{name}</span></td>
+          <td class="v-align-middle text-center">{ip}</td>
+          <td class="v-align-middle text-center">{data.navigator.appCodeName}</td>
+          <td class="v-align-middle text-center">{data.navigator.cookieEnabled}</td>
+          <td class="v-align-middle text-center">{data.navigator.language}</td>
+          <td class="v-align-middle text-center">{data.navigator.platform}</td>
         </tr>
         </tbody>
       </table>

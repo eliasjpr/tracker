@@ -1,24 +1,32 @@
 (function (window) {
   "use strict";
-  var visitId, visitorId, track;
-  var pinchMeTrack = window.pinchMeTrack || {};
 
-  var visitTtl     = 4 * 60; // 4 hours
-  var visitorTtl   = 2 * 365 * 24 * 60; // 2 years
-  var isReady      = false;
-  var queue        = [];
-  var canStringify = typeof(JSON) !== "undefined" && typeof(JSON.stringify) !== "undefined";
-  var eventQueue   = [];
-  var page         = pinchMeTrack.page || window.location.pathname;
-  var visitsUrl    = pinchMeTrack.visitsUrl || "/page"
-  var eventsUrl    = pinchMeTrack.eventsUrl || "/page"
+  var visitId, visitorId, track,
+      pinchMeTrack = window.pinchMeTrack || { cookies: {
+          debug: 'dx',
+          event: 'ex',
+          visit: 'vx',
+          visitor: 'vxid',
+          track: 'tx',
+          userid: 'uxid',
+          campaignid: 'cxid'
+        }},
+      visitTtl     = 4 * 60, // 4 hours
+      visitorTtl   = 2 * 365 * 24 * 60, // 2 years
+      isReady      = false,
+      queue        = [],
+      canStringify = typeof(JSON) !== "undefined" && typeof(JSON.stringify) !== "undefined",
+      eventQueue   = [],
+      page         = pinchMeTrack.page || window.location.pathname,
+      visitsUrl    = pinchMeTrack.visitsUrl || "/page",
+      eventsUrl    = pinchMeTrack.eventsUrl || "/page";
 
 
 
   // cookies
 
   // http://www.quirksmode.org/js/cookies.html
-  function setCookie(name, value, ttl) {
+  function setCookie(name, value, ttl){
     var expires      = "";
     var cookieDomain = "";
     if (ttl) {
@@ -53,7 +61,7 @@
   }
 
   function log(message) {
-    if (getCookie("pinchMeTrack_debug")) {
+    if (getCookie( pinchMeTrack.cookies.debug)) {
       window.console.log(message);
     }
   }
@@ -85,17 +93,17 @@
   function saveEventQueue() {
     // TODO add stringify method for IE 7 and under
     if (canStringify) {
-      setCookie("pinchMeTrack_events", JSON.stringify(eventQueue), 1);
+      setCookie(pinchMeTrack.cookies.event, JSON.stringify(eventQueue), 1);
     }
   }
 
   function trackEvent(event) {
+
     ready(function () {
       // ensure JSON is defined
       if (canStringify) {
-
+        console.log(event)
         if ("WebSocket" in window) {
-
           io.socket.post(eventsUrl, event, function (data, jwres) {
             deQueue(data)
             log("=== Event Saved! ===")
@@ -116,7 +124,6 @@
             }
           });
         }
-
       }
     });
   }
@@ -146,8 +153,8 @@
 
   function appendData(){
     return {
-      userId       : 0,
-      campaign     : 0,
+      userId       : getCookie( pinchMeTrack.cookies.userid ),
+      campaign     : getCookie( pinchMeTrack.cookies.campaignid ),
       title        : window.document.title,
       url          : window.document.URL,
       referrer     : window.document.referrer,
@@ -178,9 +185,9 @@
   }
 
   // main
-  visitId   = getCookie("pinchMeTrack_visit");
-  visitorId = getCookie("pinchMeTrack_visitor");
-  track     = getCookie("pinchMeTrack_track");
+  visitId   = getCookie(pinchMeTrack.cookies.event);
+  visitorId = getCookie(pinchMeTrack.cookies.visitor);
+  track     = getCookie(pinchMeTrack.cookies.track);
 
   if (visitId && visitorId && !track) {
     // TODO keep visit alive?
@@ -189,21 +196,21 @@
   }
   else {
     if (track) {
-      destroyCookie("pinchMeTrack_track");
+      destroyCookie(pinchMeTrack.cookies.track);
     }
 
     if (!visitId) {
       visitId = generateId();
-      setCookie("pinchMeTrack_visit", visitId, visitTtl);
+      setCookie(pinchMeTrack.cookies.visit, visitId, visitTtl);
     }
 
     // make sure cookies are enabled
-    if (getCookie("pinchMeTrack_visit")) {
+    if (getCookie(pinchMeTrack.cookies.visit)) {
       log("Visit started");
 
       if (!visitorId) {
         visitorId = generateId();
-        setCookie("pinchMeTrack_visitor", visitorId, visitorTtl);
+        setCookie(pinchMeTrack.cookies.visitor, visitorId, visitorTtl);
       }
 
       var event = {
@@ -238,18 +245,18 @@
   };
 
   pinchMeTrack.reset = function () {
-    destroyCookie("pinchMeTrack_visit");
-    destroyCookie("pinchMeTrack_visitor");
-    destroyCookie("pinchMeTrack_events");
-    destroyCookie("pinchMeTrack_track");
+    destroyCookie(pinchMeTrack.cookies.visit);
+    destroyCookie(pinchMeTrack.cookies.visitor);
+    destroyCookie(pinchMeTrack.cookies.event);
+    destroyCookie(pinchMeTrack.cookies.track);
     return true;
   };
 
   pinchMeTrack.debug = function (enabled) {
     if (enabled === false) {
-      destroyCookie("pinchMeTrack_debug");
+      destroyCookie(pinchMeTrack.cookies.debug);
     } else {
-      setCookie("pinchMeTrack_debug", "t", 365 * 24 * 60); // 1 year
+      setCookie(pinchMeTrack.cookies.debug, "t", 365 * 24 * 60); // 1 year
     }
     return true;
   };
@@ -270,9 +277,7 @@
     saveEventQueue();
 
     // wait in case navigating to reduce duplicate events
-    setTimeout(function () {
-      trackEvent(event);
-    }, 1000);
+    setTimeout(function () { trackEvent(event);  }, 1000);
   };
 
   pinchMeTrack.trackView = function () {
@@ -281,7 +286,7 @@
       title: document.title,
       page : page
     };
-    pinchMeTrack.track("$view", properties);
+    pinchMeTrack.track("page-view", properties);
   };
 
   pinchMeTrack.trackClicks = function () {
@@ -291,21 +296,21 @@
 
       properties.text = properties.tag == "input" ? $target.val() : $.trim($target.text().replace(/[\s\r\n]+/g, " "));
       properties.href = $target.attr("href");
-      pinchMeTrack.track("$click", properties);
+      pinchMeTrack.track("page-click", properties);
     });
   };
 
   pinchMeTrack.trackSubmits = function () {
     $(document).on("submit", "form", function (e) {
       var properties = eventProperties(e);
-      pinchMeTrack.track("$submit", properties);
+      pinchMeTrack.track("form-submit", properties);
     });
   };
 
   pinchMeTrack.trackChanges = function () {
     $(document).on("change", "input, textarea, select", function (e) {
       var properties = eventProperties(e);
-      pinchMeTrack.track("$change", properties);
+      pinchMeTrack.track("form-change", properties);
     });
   };
 
@@ -318,7 +323,7 @@
 
   // push events from queue
   try {
-    eventQueue = JSON.parse(getCookie("pinchMeTrack_events") || "[]");
+    eventQueue = JSON.parse(getCookie(pinchMeTrack.cookies.event) || "[]");
   }
   catch (e) {
     // do nothing
