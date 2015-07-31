@@ -2,7 +2,7 @@
   "use strict";
 
   var visitId, visitorId, track,
-      pinchMeTrack = window.pinchMeTrack || { cookies: {
+      liana = window.liana || { cookies: {
           debug: 'dx',
           event: 'ex',
           visit: 'vx',
@@ -17,9 +17,9 @@
       queue        = [],
       canStringify = typeof(JSON) !== "undefined" && typeof(JSON.stringify) !== "undefined",
       eventQueue   = [],
-      page         = pinchMeTrack.page || window.location.pathname,
-      visitsUrl    = pinchMeTrack.visitsUrl || "/page",
-      eventsUrl    = pinchMeTrack.eventsUrl || "/page";
+      page         = liana.page || window.location.pathname,
+      visitsUrl    = liana.visitsUrl || "/page",
+      eventsUrl    = liana.eventsUrl || "/page";
 
 
 
@@ -34,8 +34,8 @@
       date.setTime(date.getTime() + (ttl * 60 * 1000));
       expires  = "; expires=" + date.toGMTString();
     }
-    if (pinchMeTrack.domain) {
-      cookieDomain = "; domain=" + pinchMeTrack.domain;
+    if (liana.domain) {
+      cookieDomain = "; domain=" + liana.domain;
     }
     document.cookie = name + "=" + escape(value) + expires + cookieDomain + "; path=/";
   }
@@ -61,7 +61,7 @@
   }
 
   function log(message) {
-    if (getCookie( pinchMeTrack.cookies.debug)) {
+    if (getCookie( liana.cookies.debug)) {
       window.console.log(message);
     }
   }
@@ -93,7 +93,7 @@
   function saveEventQueue() {
     // TODO add stringify method for IE 7 and under
     if (canStringify) {
-      setCookie(pinchMeTrack.cookies.event, JSON.stringify(eventQueue), 1);
+      setCookie(liana.cookies.event, JSON.stringify(eventQueue), 1);
     }
   }
 
@@ -102,7 +102,6 @@
     ready(function () {
       // ensure JSON is defined
       if (canStringify) {
-        console.log(event)
         if ("WebSocket" in window) {
           io.socket.post(eventsUrl, event, function (data, jwres) {
             deQueue(data)
@@ -152,9 +151,19 @@
   }
 
   function appendData(){
+    var coordinates;
+    if (navigator.geolocation) {
+      coordinates: navigator.geolocation.getCurrentPosition(function(pos){
+          return {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          }
+        })
+    }
+    console.log(coordinates)
     return {
-      userId       : getCookie( pinchMeTrack.cookies.userid ),
-      campaign     : getCookie( pinchMeTrack.cookies.campaignid ),
+      userId       : getCookie( liana.cookies.userid ),
+      campaign     : getCookie( liana.cookies.campaignid ),
       title        : window.document.title,
       url          : window.document.URL,
       referrer     : window.document.referrer,
@@ -179,15 +188,16 @@
         onLine       : window.navigator.onLine,
         platform     : window.navigator.platform,
         product      : window.navigator.product,
-        userAgent    : window.navigator.userAgent
+        userAgent    : window.navigator.userAgent,
+        coordinates  : coordinates
       }
     };
   }
 
   // main
-  visitId   = getCookie(pinchMeTrack.cookies.event);
-  visitorId = getCookie(pinchMeTrack.cookies.visitor);
-  track     = getCookie(pinchMeTrack.cookies.track);
+  visitId   = getCookie(liana.cookies.event);
+  visitorId = getCookie(liana.cookies.visitor);
+  track     = getCookie(liana.cookies.track);
 
   if (visitId && visitorId && !track) {
     // TODO keep visit alive?
@@ -196,21 +206,21 @@
   }
   else {
     if (track) {
-      destroyCookie(pinchMeTrack.cookies.track);
+      destroyCookie(liana.cookies.track);
     }
 
     if (!visitId) {
       visitId = generateId();
-      setCookie(pinchMeTrack.cookies.visit, visitId, visitTtl);
+      setCookie(liana.cookies.visit, visitId, visitTtl);
     }
 
     // make sure cookies are enabled
-    if (getCookie(pinchMeTrack.cookies.visit)) {
+    if (getCookie(liana.cookies.visit)) {
       log("Visit started");
 
       if (!visitorId) {
         visitorId = generateId();
-        setCookie(pinchMeTrack.cookies.visitor, visitorId, visitorTtl);
+        setCookie(liana.cookies.visitor, visitorId, visitorTtl);
       }
 
       var event = {
@@ -236,32 +246,32 @@
     }
   }
 
-  pinchMeTrack.getVisitId = pinchMeTrack.getVisitToken = function () {
+  liana.getVisitId = liana.getVisitToken = function () {
     return visitId;
   };
 
-  pinchMeTrack.getVisitorId = pinchMeTrack.getVisitorToken = function () {
+  liana.getVisitorId = liana.getVisitorToken = function () {
     return visitorId;
   };
 
-  pinchMeTrack.reset = function () {
-    destroyCookie(pinchMeTrack.cookies.visit);
-    destroyCookie(pinchMeTrack.cookies.visitor);
-    destroyCookie(pinchMeTrack.cookies.event);
-    destroyCookie(pinchMeTrack.cookies.track);
+  liana.reset = function () {
+    destroyCookie(liana.cookies.visit);
+    destroyCookie(liana.cookies.visitor);
+    destroyCookie(liana.cookies.event);
+    destroyCookie(liana.cookies.track);
     return true;
   };
 
-  pinchMeTrack.debug = function (enabled) {
+  liana.debug = function (enabled) {
     if (enabled === false) {
-      destroyCookie(pinchMeTrack.cookies.debug);
+      destroyCookie(liana.cookies.debug);
     } else {
-      setCookie(pinchMeTrack.cookies.debug, "t", 365 * 24 * 60); // 1 year
+      setCookie(liana.cookies.debug, "t", 365 * 24 * 60); // 1 year
     }
     return true;
   };
 
-  pinchMeTrack.track = function (name, properties) {
+  liana.track = function (name, properties) {
     // generate unique id
     var event = {
       name         : name,
@@ -280,50 +290,50 @@
     setTimeout(function () { trackEvent(event);  }, 1000);
   };
 
-  pinchMeTrack.trackView = function () {
+  liana.trackView = function () {
     var properties = {
       url  : window.location.href,
       title: document.title,
       page : page
     };
-    pinchMeTrack.track("page-view", properties);
+    liana.track("page-view", properties);
   };
 
-  pinchMeTrack.trackClicks = function () {
+  liana.trackClicks = function () {
     $(document).on("click", "a, button, input[type=submit]", function (e) {
       var $target     = $(e.currentTarget);
       var properties  = eventProperties(e);
 
       properties.text = properties.tag == "input" ? $target.val() : $.trim($target.text().replace(/[\s\r\n]+/g, " "));
       properties.href = $target.attr("href");
-      pinchMeTrack.track("page-click", properties);
+      liana.track("page-click", properties);
     });
   };
 
-  pinchMeTrack.trackSubmits = function () {
+  liana.trackSubmits = function () {
     $(document).on("submit", "form", function (e) {
       var properties = eventProperties(e);
-      pinchMeTrack.track("form-submit", properties);
+      liana.track("form-submit", properties);
     });
   };
 
-  pinchMeTrack.trackChanges = function () {
+  liana.trackChanges = function () {
     $(document).on("change", "input, textarea, select", function (e) {
       var properties = eventProperties(e);
-      pinchMeTrack.track("form-change", properties);
+      liana.track("form-change", properties);
     });
   };
 
-  pinchMeTrack.trackAll = function () {
-    pinchMeTrack.trackView();
-    pinchMeTrack.trackClicks();
-    pinchMeTrack.trackSubmits();
-    pinchMeTrack.trackChanges();
+  liana.trackAll = function () {
+    liana.trackView();
+    liana.trackClicks();
+    liana.trackSubmits();
+    liana.trackChanges();
   };
 
   // push events from queue
   try {
-    eventQueue = JSON.parse(getCookie(pinchMeTrack.cookies.event) || "[]");
+    eventQueue = JSON.parse(getCookie(liana.cookies.event) || "[]");
   }
   catch (e) {
     // do nothing
@@ -334,11 +344,11 @@
   }
 
   // Attache tracker back to window object
-  window.pinchMeTrack = pinchMeTrack;
+  window.liana = liana;
 
   // Start Tracking
   $(window.document).ready(function(){
-    window.pinchMeTrack.trackAll();
+    window.liana.trackAll();
   });
 
 }(window));

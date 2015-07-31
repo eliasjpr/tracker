@@ -25,9 +25,9 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    user: 'eperez',
-    password: 'password',
-    database: 'analytics_database'
+    user: 'root',
+    password: 'root',
+    database: 'lianadb_dev'
   }
 };
 
