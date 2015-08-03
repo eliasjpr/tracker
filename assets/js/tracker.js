@@ -2,7 +2,9 @@
   "use strict";
 
   var visitId, visitorId, track,
-      liana = window.liana || { cookies: {
+      liana = window.liana || {
+          coordinates: {},
+          cookies: {
           debug: 'dx',
           event: 'ex',
           visit: 'vx',
@@ -10,10 +12,12 @@
           track: 'tx',
           userid: 'uxid',
           campaignid: 'cxid'
-        }},
+        }
+      },
       visitTtl     = 4 * 60, // 4 hours
       visitorTtl   = 2 * 365 * 24 * 60, // 2 years
       isReady      = false,
+
       queue        = [],
       canStringify = typeof(JSON) !== "undefined" && typeof(JSON.stringify) !== "undefined",
       eventQueue   = [],
@@ -151,17 +155,7 @@
   }
 
   function appendData(){
-    var coordinates;
-    if (navigator.geolocation) {
-      coordinates: navigator.geolocation.getCurrentPosition(function(pos){
-          return {
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude
-          }
-        })
-    }
-    console.log(coordinates)
-    return {
+    var payload  = {
       userId       : getCookie( liana.cookies.userid ),
       campaign     : getCookie( liana.cookies.campaignid ),
       title        : window.document.title,
@@ -189,9 +183,16 @@
         platform     : window.navigator.platform,
         product      : window.navigator.product,
         userAgent    : window.navigator.userAgent,
-        coordinates  : coordinates
+        coordinates  : liana.coordinates
       }
-    };
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos){
+        payload.navigator.coordinates = { latitude: pos.coords.latitude, longitude: pos.coords.longitude }
+      })
+    }
+    return payload;
   }
 
   // main
@@ -228,7 +229,6 @@
         visitor_token: visitorId,
         landing_page : window.location.href
       };
-
 
 
       if("WebSocket" in window){
