@@ -20,7 +20,6 @@
  */
 
 module.exports.connections = {
-
   AnalyticsMongoDb: {
     adapter: 'sails-mongo',
     host: 'localhost',
@@ -28,6 +27,14 @@ module.exports.connections = {
     user: 'root',
     password: 'root',
     database: 'lianadb_dev'
+  },
+  PinchMeReadDB: {
+    adapter: 'sails-mysql',
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '',
+    database: 'pinchme_dev'
   }
 };
 

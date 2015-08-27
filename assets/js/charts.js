@@ -1,7 +1,7 @@
-/* Webarch Admin Dashboard 
-/* This JS is Only DEMO Purposes 
------------------------------------------------------------------*/	
-$(document).ready(function() {		
+/* Webarch Admin Dashboard
+/* This JS is Only DEMO Purposes
+-----------------------------------------------------------------*/
+$(document).ready(function() {
 
 	var d2 = [ [1, 30],
             [2, 20],
@@ -23,28 +23,28 @@ $(document).ready(function() {
 ];
 	var plot = $.plotAnimator($("#placeholder"), [
 			{  	label: "Label 1",
-				data: d2, 	
-				lines: {				
+				data: d2,
+				lines: {
 					fill: 0.6,
-					lineWidth: 0,				
+					lineWidth: 0,
 				},
 				color:['#f89f9f']
-			},{ 
-				data: d1, 
-				animator: {steps: 60, duration: 1000, start:0}, 		
-				lines: {lineWidth:2},	
+			},{
+				data: d1,
+				animator: {steps: 60, duration: 1000, start:0},
+				lines: {lineWidth:2},
 				shadowSize:0,
 				color: '#f35958'
 			},{
-				data: d1, 
-				points: { show: true, fill: true, radius:6,fillColor:"#f35958",lineWidth:3 },	
-				color: '#fff',				
+				data: d1,
+				points: { show: true, fill: true, radius:6,fillColor:"#f35958",lineWidth:3 },
+				color: '#fff',
 				shadowSize:0
 			},
 			{	label: "Label 2",
-				data: d2, 
-				points: { show: true, fill: true, radius:6,fillColor:"#f5a6a6",lineWidth:3 },	
-				color: '#fff',				
+				data: d2,
+				points: { show: true, fill: true, radius:6,fillColor:"#f5a6a6",lineWidth:3 },
+				color: '#fff',
 				shadowSize:0
 			}
 		],{	xaxis: {
@@ -78,7 +78,7 @@ $(document).ready(function() {
 				backgroundColor: { colors: [ "#fff", "#fff" ] },
 				borderWidth:1,borderColor:"#f0f0f0",
 				margin:0,
-				minBorderMargin:0,							
+				minBorderMargin:0,
 				labelMargin:20,
 				hoverable: true,
 				clickable: true,
@@ -99,9 +99,9 @@ $(document).ready(function() {
 				} else {
 					$("#tooltip").hide();
 				}
-	
+
 		});
-	
+
 	$("<div id='tooltip'></div>").css({
 			position: "absolute",
 			display: "none",
@@ -111,6 +111,8 @@ $(document).ready(function() {
 			"z-index":"99999",
 			opacity: 0.80
 	}).appendTo("body");
+
+
 	$("#mini-chart-orders").sparkline([1,4,6,2,0,5,6,4], {
 		type: 'bar',
 		height: '30px',
@@ -125,8 +127,8 @@ $(document).ready(function() {
 		barWidth: 6,
 		barSpacing: 2,
 		barColor: '#0aa699',
-		negBarColor: '#0aa699'});	
-	
+		negBarColor: '#0aa699'});
+
 	$('#ram-usage').easyPieChart({
 		lineWidth:9,
 		barColor:'#f35958',
@@ -139,9 +141,9 @@ $(document).ready(function() {
 		trackColor:'#e5e9ec',
 		scaleColor:false
     });
-	
+
 	// Moris Charts - Line Charts
-	
+
 	Morris.Line({
 	  element: 'line-example',
 	  data: [
@@ -158,7 +160,7 @@ $(document).ready(function() {
 	  labels: ['Series A', 'Series B'],
 	  lineColors:['#0aa699','#d1dade'],
 	});
-	
+
 	Morris.Area({
 	  element: 'area-example',
 	  data: [
@@ -178,7 +180,7 @@ $(document).ready(function() {
 	   grid:'false',
 	  fillOpacity:'0.5'
 	});
-	
+
 	Morris.Donut({
 	  element: 'donut-example',
 	  data: [
@@ -190,7 +192,7 @@ $(document).ready(function() {
 	});
 
 	$('#mysparkline').sparkline([4,3,3,1,4,3,2,2,3], {
-			type: 'line', 
+			type: 'line',
 			width: '100%',
 			height:'250px',
 			fillColor: 'rgba(209, 218, 222, 0.30)',
@@ -204,7 +206,7 @@ $(document).ready(function() {
 			normalRangeMin: 0
 	});
 	$('#mysparkline').sparkline([3,2,3,4,3,2,4,1,3], {
-					type: 'line', 
+					type: 'line',
 					composite: true,
 					width: '100%',
 					fillColor: ' rgba(0, 141, 214, 0.10)',
@@ -216,8 +218,8 @@ $(document).ready(function() {
 					spotRadius: 4,
 					valueSpots:[3,2,3,4,3,2,4,1,3],
 					normalRangeMin: 0
-	});	
-	
+	});
+
 	$("#spark-2").sparkline([4,3,3,4,5,4,3,2,4,5,6,4,3,5,2,4,6], {
 		type: 'line',
 		width: '100%',
@@ -230,7 +232,7 @@ $(document).ready(function() {
 		highlightLineColor: '#78cec7',
 		spotRadius: 5
 	});
-	
+
 	$("#sparkline-pie").sparkline([8,2,3], {
 		type: 'pie',
 		width: '100%',
@@ -240,7 +242,7 @@ $(document).ready(function() {
 		borderWidth: 0,
 		borderColor: '#000000 '
 	});
-	
+
 	var seriesData = [ [], []];
 	var random = new Rickshaw.Fixtures.RandomData(50);
 
@@ -274,9 +276,9 @@ $(document).ready(function() {
 		graph.update();
 
 	},1000);
-	
+
 	//Bar Chart  - Jquert flot
-	
+
     var d1_1 = [
         [1325376000000, 120],
         [1328054400000, 70],
@@ -284,7 +286,7 @@ $(document).ready(function() {
         [1333238400000, 60],
         [1335830400000, 35]
     ];
- 
+
     var d1_2 = [
         [1325376000000, 80],
         [1328054400000, 60],
@@ -292,7 +294,7 @@ $(document).ready(function() {
         [1333238400000, 35],
         [1335830400000, 30]
     ];
- 
+
     var d1_3 = [
         [1325376000000, 80],
         [1328054400000, 40],
@@ -300,7 +302,7 @@ $(document).ready(function() {
         [1333238400000, 20],
         [1335830400000, 10]
     ];
- 
+
     var d1_4 = [
         [1325376000000, 15],
         [1328054400000, 10],
@@ -308,7 +310,7 @@ $(document).ready(function() {
         [1333238400000, 20],
         [1335830400000, 15]
     ];
- 
+
     var data1 = [
         {
             label: "Product 1",
@@ -364,7 +366,7 @@ $(document).ready(function() {
         },
 
     ];
- 
+
     $.plot($("#placeholder-bar-chart"), data1, {
         xaxis: {
             min: (new Date(2011, 11, 15)).getTime(),
@@ -398,19 +400,19 @@ $(document).ready(function() {
             shadowSize: 1
         }
     });
- 
- 
+
+
     function getMonthName(newTimestamp) {
         var d = new Date(newTimestamp);
- 
+
         var numericMonth = d.getMonth();
         var monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
- 
+
         var alphaMonth = monthArray[numericMonth];
- 
+
         return alphaMonth;
     }
- 
+
 
 	 // ORDERED & STACKED CHART
     var data2 = [
@@ -468,7 +470,7 @@ $(document).ready(function() {
         },
 
     ];
-	$.plot($('#stacked-ordered-chart'), data2, {		
+	$.plot($('#stacked-ordered-chart'), data2, {
 		 grid: {
             hoverable: true,
             clickable: false,
@@ -507,6 +509,6 @@ $(document).ready(function() {
 
 		return data;
 	}
-	
-	
+
+
 });

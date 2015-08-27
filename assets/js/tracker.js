@@ -1,23 +1,21 @@
-(function (window) {
++function liana_load(window) {
   "use strict";
 
   var visitId, visitorId, track,
       liana = window.liana || {
-          coordinates: {},
           cookies: {
-          debug: 'dx',
-          event: 'ex',
-          visit: 'vx',
-          visitor: 'vxid',
-          track: 'tx',
-          userid: 'uxid',
-          campaignid: 'cxid'
-        }
+            debug: 'dx',
+            event: 'ex',
+            visit: 'vx',
+            visitor: 'vxid',
+            track: 'tx',
+            userid: 'uxid',
+            campaignid: 'cxid'
+          }
       },
       visitTtl     = 4 * 60, // 4 hours
       visitorTtl   = 2 * 365 * 24 * 60, // 2 years
       isReady      = false,
-
       queue        = [],
       canStringify = typeof(JSON) !== "undefined" && typeof(JSON.stringify) !== "undefined",
       eventQueue   = [],
@@ -103,7 +101,7 @@
 
   function trackEvent(event) {
 
-    ready(function () {
+      ready(function () {
       // ensure JSON is defined
       if (canStringify) {
         if ("WebSocket" in window) {
@@ -147,7 +145,7 @@
 
     return {
       tag    : $target.get(0).tagName.toLowerCase(),
-      id     : $target.attr("id"),
+      id     : $target.attr("id") || 'not-defined',
       "class": $target.attr("class"),
       page   : page,
       section: $target.closest("*[data-section]").data("section")
@@ -182,16 +180,16 @@
         onLine       : window.navigator.onLine,
         platform     : window.navigator.platform,
         product      : window.navigator.product,
-        userAgent    : window.navigator.userAgent,
-        coordinates  : liana.coordinates
-      }
+        userAgent    : window.navigator.userAgent
+      },
+      geolocation: {}
     }
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(pos){
-        payload.navigator.coordinates = { latitude: pos.coords.latitude, longitude: pos.coords.longitude }
-      })
-    }
+    // IP Geo Location API
+    $.getJSON("http://www.telize.com/jsonip?callback=?", function(data) {
+        payload.geolocation = data;
+    });
+
     return payload;
   }
 
@@ -282,12 +280,11 @@
       landing_page : window.location.href,
       data: appendData()
     };
-
     eventQueue.push(event);
     saveEventQueue();
 
     // wait in case navigating to reduce duplicate events
-    setTimeout(function () { trackEvent(event);  }, 1000);
+    setTimeout(function () { trackEvent(event);  }, 250);
   };
 
   liana.trackView = function () {
@@ -328,7 +325,7 @@
     liana.trackView();
     liana.trackClicks();
     liana.trackSubmits();
-    liana.trackChanges();
+    //liana.trackChanges();
   };
 
   // push events from queue
@@ -343,12 +340,12 @@
     trackEvent(eventQueue[i]);
   }
 
-  // Attache tracker back to window object
+  // Attache tracker back to window
   window.liana = liana;
 
   // Start Tracking
   $(window.document).ready(function(){
     window.liana.trackAll();
+    log(" Tracker Running... ")
   });
-
-}(window));
+}(window);
