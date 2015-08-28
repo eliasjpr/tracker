@@ -6,13 +6,6 @@
 */
 var http = require('http');
 
-
 module.exports = {
-
-  attributes: {
-    user: {
-      model:'user'
-    }
-  }
 };
 
