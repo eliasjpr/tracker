@@ -1,6 +1,17 @@
 module.exports = {
-  models: {
-    connection: 'AnalyticsMongoDb_prod'
+  connections : {
+    mongoLive: {
+      adapter: 'sails-mongo',
+      host: 'ec2-23-21-222-200.compute-1.amazonaws.com',
+      port: 27017,
+      // user: 'liana_user',
+      // password: 'PINCHme123',
+      database: 'lianadb_dev'
+    }
   },
-  port: 80
+  models: {
+     connection: 'mongoLive'
+  },
+  port: '80',
+  environment: 'production'
 };

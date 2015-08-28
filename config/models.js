@@ -10,6 +10,6 @@
  */
 
 module.exports.models = {
-  connection: 'AnalyticsMongoDb',
-  migrate: 'safe'
+  connection: 'LianaDB',
+  migrate: 'alter'
 };
