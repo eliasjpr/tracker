@@ -1,6 +1,6 @@
 module.exports = {
   models: {
-    connection: 'AnalyticsMongoDb'
+    connection: 'AnalyticsMongoDb_prod'
   },
   port: 80
 };

@@ -27,6 +27,14 @@ module.exports.connections = {
     user: 'root',
     password: 'root',
     database: 'lianadb_dev'
+  },
+  AnalyticsMongoDb_prod:{
+    adapter: 'sails-mongo',
+    host: 'ec2-23-21-222-200.compute-1.amazonaws.com',
+    port: 27017,
+    user: 'PMadmin',
+    password: 'PINCHme123',
+    database: 'lianadb_dev'
   }
 };
 
