@@ -10,7 +10,8 @@ module.exports = {
     }
   },
   models: {
-     connection: 'mongoLive'
+     connection: 'mongoLive',
+     migrate: 'safe'
   },
   port: process.env.PORT || '8081',
   environment: process.env.NODE_ENV || 'production'
