@@ -10,6 +10,4 @@
  */
 
 module.exports.models = {
-  connection: 'LianaDB',
-  migrate: 'alter'
 };
