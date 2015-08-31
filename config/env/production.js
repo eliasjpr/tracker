@@ -1,4 +1,10 @@
 module.exports = {
+  models: {
+     connection: 'mongoLive',
+     migrate: 'safe'
+  },
+  port: process.env.PORT || '8081',
+  environment: process.env.NODE_ENV || 'production',
   connections : {
     mongoLive: {
       adapter: 'sails-mongo',
@@ -9,10 +15,7 @@ module.exports = {
       database: process.env.DB_NAME
     }
   },
-  models: {
-     connection: 'mongoLive',
-     migrate: 'safe'
-  },
-  port: process.env.PORT || '8081',
-  environment: process.env.NODE_ENV || 'production'
+  cors:{
+    origin: '*'
+  }
 };
