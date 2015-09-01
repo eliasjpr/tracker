@@ -15,6 +15,7 @@ campaign effectiveness and insights.
 - Referral analytics summary of all acquisition sources and campaigns
 
 
+
 ## Sample Queries to Visualize
 
 SELECT COUNT(*), date(created_at) as created_on
