@@ -104,28 +104,19 @@
       ready(function () {
       // ensure JSON is defined
       if (canStringify) {
-        if ("WebSocket" in window) {
-          io.socket.post(eventsUrl, event, function (data, jwres) {
-            deQueue(data)
+        $.ajax({
+          type       : "POST",
+          url        : eventsUrl,
+          data       : event,
+          contentType: "application/json; charset=utf-8",
+          dataType   : "json",
+          success    : function () {
+            deQueue(event)
             log("=== Event Saved! ===")
-            log(data)
-          });
-        }
-        else {
-          $.ajax({
-            type       : "POST",
-            url        : eventsUrl,
-            data       : event,
-            contentType: "application/json; charset=utf-8",
-            dataType   : "json",
-            success    : function () {
-              deQueue(event)
-              log("=== Event Saved! ===")
-              log(event)
-            }
-          });
-        }
-      }
+            log(event)
+          }
+        });
+      };
     });
   }
 
